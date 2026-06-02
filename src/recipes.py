@@ -106,3 +106,16 @@ class Recipe:
             new_list._items = self._items + other._items
             return new_list
         raise TypeError("Складывать можно только объекты ShoppingList")
+
+class DietaryRecipe(Recipe):
+    def __init__(self, title: str, diet_type: str, ingredients: list = None):
+        super().__init__(title, ingredients)
+        self.diet_type = diet_type
+    
+    def scale(self, ratio: float):
+        base_scaled = super().scale(ratio)
+        return DietaryRecipe(base_scaled.title, self.diet_type, base_scaled.ingredients)
+    
+    def __str__(self):
+        base_str = super().__str__()
+        return base_str.replace("Рецепт:", f"[{self.diet_type}] Рецепт:")
